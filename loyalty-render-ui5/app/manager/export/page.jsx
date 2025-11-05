@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import RequireAuth from "../_components/RequireAuth";
-import { getAuth } from "../_lib/auth-client";
+import RequireAuth from "../../_components/RequireAuth";
+import { getAuth } from "../../_lib/auth-client";
 
 export default function ExportPage() {
   return (
