@@ -5,18 +5,12 @@ export async function safeFetchJSON(input, init = {}) {
   const isJSON = ctype.includes("application/json");
   if (!isJSON) {
     const text = await res.text();
-    const snippet = text.slice(0, 200).replace(/\s+/g, " ").trim();
-    const err = new Error("Server returned non-JSON response");
-    err.status = res.status;
-    err.responseText = snippet;
-    throw err;
+    const snippet = text.slice(0, 300).replace(/\s+/g, " ").trim();
+    throw new Error(`Server returned HTML instead of JSON: ${res.status} ${snippet}`);
   }
   const data = await res.json();
   if (!res.ok) {
-    const err = new Error(data?.error || "Request failed");
-    err.status = res.status;
-    err.data = data;
-    throw err;
+    throw new Error(data?.error || `Request failed: ${res.status}`);
   }
   return data;
 }
